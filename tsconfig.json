@@ -14,7 +14,7 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "skipLibCheck": true,
-    "typeRoots": ["node_modules/@webgpu/types"]
+    "typeRoots": ["node_modules/@webgpu/types", "src/typings"]
   },
   "include": ["src"]
 }
