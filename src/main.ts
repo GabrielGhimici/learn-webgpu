@@ -2,6 +2,7 @@ import '../index.css';
 import { Canvas } from './core/canvas';
 import { checkWebGPU } from './utils/check-webgpu';
 import { renderTriangle } from './core/triangle';
+import { renderPrimitives } from './core/primitives';
 
 const appContainer = document.getElementById('app');
 
@@ -21,15 +22,17 @@ async function render(canvas: HTMLCanvasElement) {
     throw new Error('Unable to retrieve adapter');
   }
   const device = await adapter.requestDevice();
-  const format = navigator.gpu.getPreferredCanvasFormat();
   const ctx = canvas.getContext('webgpu');
   if (!ctx) {
     throw new Error('Unable to retrieve canvas context!');
   }
   ctx.configure({
     device: device,
-    format: format,
+    format: navigator.gpu.getPreferredCanvasFormat(),
     alphaMode: 'opaque',
   });
-  renderTriangle(ctx, device, format);
+  // renderTriangle(ctx, device);
+  // renderPrimitives(ctx, device);
+  // renderPrimitives(ctx, device, 'line-list');
+  // renderPrimitives(ctx, device, 'line-strip');
 }

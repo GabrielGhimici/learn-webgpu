@@ -1,15 +1,19 @@
-import triangleFragmentShader from '../shaders/triangle.frag.wgsl';
-import triangleVertexShader from '../shaders/triangle.vert.wgsl';
+import primitiveVertexShader from '../shaders/primitive.vert.wgsl';
+import primitiveFragmentShader from '../shaders/primitive.frag.wgsl';
 
-export const renderTriangle = (ctx: GPUCanvasContext, device: GPUDevice) => {
+export const renderPrimitives = (
+  ctx: GPUCanvasContext,
+  device: GPUDevice,
+  primitive: Exclude<GPUPrimitiveTopology, 'triangle-list' | 'triangle-strip'> = 'point-list'
+) => {
   const pipeline = device.createRenderPipeline({
     layout: 'auto',
     vertex: {
-      module: device.createShaderModule({ code: triangleVertexShader }),
+      module: device.createShaderModule({ code: primitiveVertexShader }),
       entryPoint: 'main',
     },
     fragment: {
-      module: device.createShaderModule({ code: triangleFragmentShader }),
+      module: device.createShaderModule({ code: primitiveFragmentShader }),
       entryPoint: 'main',
       targets: [
         {
@@ -18,7 +22,8 @@ export const renderTriangle = (ctx: GPUCanvasContext, device: GPUDevice) => {
       ],
     },
     primitive: {
-      topology: 'triangle-list',
+      topology: primitive,
+      stripIndexFormat: primitive === 'line-strip' ? 'uint32' : undefined,
     },
   });
 
@@ -28,7 +33,7 @@ export const renderTriangle = (ctx: GPUCanvasContext, device: GPUDevice) => {
     colorAttachments: [
       {
         view: textureView,
-        clearValue: { r: 0.8, g: 0.8, b: 0.8, a: 1.0 },
+        clearValue: { r: 0.1, g: 0.1, b: 0.1, a: 1.0 },
         loadOp: 'clear',
         storeOp: 'store',
       },
@@ -36,7 +41,7 @@ export const renderTriangle = (ctx: GPUCanvasContext, device: GPUDevice) => {
   });
 
   renderPass.setPipeline(pipeline);
-  renderPass.draw(3);
+  renderPass.draw(6);
   renderPass.end();
   device.queue.submit([commandEncoder.finish()]);
 };
