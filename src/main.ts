@@ -3,6 +3,7 @@ import { Canvas } from './core/canvas';
 import { checkWebGPU } from './utils/check-webgpu';
 import { renderTriangle } from './core/triangle';
 import { renderPrimitives } from './core/primitives';
+import { renderTrianglePrimitives } from './core/triangle-primitives';
 
 const appContainer = document.getElementById('app');
 
@@ -35,4 +36,6 @@ async function render(canvas: HTMLCanvasElement) {
   // renderPrimitives(ctx, device);
   // renderPrimitives(ctx, device, 'line-list');
   // renderPrimitives(ctx, device, 'line-strip');
+  renderTrianglePrimitives(ctx, device);
+  // renderTrianglePrimitives(ctx, device, 'triangle-strip');
 }
