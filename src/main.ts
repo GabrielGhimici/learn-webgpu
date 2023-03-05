@@ -4,6 +4,7 @@ import { checkWebGPU } from './utils/check-webgpu';
 import { renderTriangle } from './core/triangle';
 import { renderPrimitives } from './core/primitives';
 import { renderTrianglePrimitives } from './core/triangle-primitives';
+import { RenderContext, renderSquareWithBuffer } from './core/buffer-square';
 
 const appContainer = document.getElementById('app');
 
@@ -36,6 +37,9 @@ async function render(canvas: HTMLCanvasElement) {
   // renderPrimitives(ctx, device);
   // renderPrimitives(ctx, device, 'line-list');
   // renderPrimitives(ctx, device, 'line-strip');
-  renderTrianglePrimitives(ctx, device);
+  // renderTrianglePrimitives(ctx, device);
   // renderTrianglePrimitives(ctx, device, 'triangle-strip');
+  // renderSquareWithBuffer(ctx, device, RenderContext.TWO_BUFFERS);
+  // renderSquareWithBuffer(ctx, device, RenderContext.ONE_BUFFER);
+  renderSquareWithBuffer(ctx, device, RenderContext.INDEXED);
 }
