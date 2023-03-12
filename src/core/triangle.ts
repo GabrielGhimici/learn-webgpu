@@ -1,6 +1,6 @@
 import triangleFragmentShader from '../shaders/triangle.frag.wgsl';
 import triangleVertexShader from '../shaders/triangle.vert.wgsl';
-import { clearValue } from '../utils/consts';
+import { clearValue } from '../utils/constants';
 
 export const renderTriangle = (ctx: GPUCanvasContext, device: GPUDevice) => {
   const pipeline = device.createRenderPipeline({

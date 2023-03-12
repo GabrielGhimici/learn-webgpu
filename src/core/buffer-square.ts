@@ -1,7 +1,7 @@
 import { createBuffer, createIndexBuffer } from '../utils/buffers';
 import bufferSquareVertexShader from '../shaders/buffer-square.vert.wgsl';
 import bufferSquareFragmentShader from '../shaders/buffer-square.frag.wgsl';
-import { clearValue } from '../utils/consts';
+import { clearValue } from '../utils/constants';
 
 export enum RenderContext {
   TWO_BUFFERS = 'two-buffers',
