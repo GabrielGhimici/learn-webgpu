@@ -1,5 +1,5 @@
 import '../index.css';
-import { Canvas } from './core/canvas';
+import { Canvas } from './core/canvas-element';
 import { checkWebGPU } from './utils/check-webgpu';
 import { renderTriangle } from './core/triangle';
 import { renderPrimitives } from './core/primitives';
