@@ -1,5 +1,6 @@
 import trianglePrimitiveVertexShader from '../shaders/triangle-primitive.vert.wgsl';
 import trianglePrimitiveFragmentShader from '../shaders/triangle-primitive.frag.wgsl';
+import { clearValue } from '../utils/consts';
 
 export const renderTrianglePrimitives = (
   ctx: GPUCanvasContext,
@@ -33,7 +34,7 @@ export const renderTrianglePrimitives = (
     colorAttachments: [
       {
         view: textureView,
-        clearValue: { r: 0.1, g: 0.1, b: 0.1, a: 1.0 },
+        clearValue: clearValue,
         loadOp: 'clear',
         storeOp: 'store',
       },

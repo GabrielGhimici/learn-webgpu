@@ -1,5 +1,6 @@
 import triangleFragmentShader from '../shaders/triangle.frag.wgsl';
 import triangleVertexShader from '../shaders/triangle.vert.wgsl';
+import { clearValue } from '../utils/consts';
 
 export const renderTriangle = (ctx: GPUCanvasContext, device: GPUDevice) => {
   const pipeline = device.createRenderPipeline({
@@ -28,7 +29,7 @@ export const renderTriangle = (ctx: GPUCanvasContext, device: GPUDevice) => {
     colorAttachments: [
       {
         view: textureView,
-        clearValue: { r: 0.8, g: 0.8, b: 0.8, a: 1.0 },
+        clearValue: clearValue,
         loadOp: 'clear',
         storeOp: 'store',
       },

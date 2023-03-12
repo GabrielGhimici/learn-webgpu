@@ -4,6 +4,7 @@ import cubeVertexShader from '../../shaders/cube.vert.wgsl';
 import cubeFragmentShader from '../../shaders/cube.frag.wgsl';
 import { createTransforms, createViewProjection } from '../../utils/matrix';
 import { mat4 } from 'gl-matrix';
+import { clearValue } from '../../utils/consts';
 
 export const renderCube = (ctx: GPUCanvasContext, device: GPUDevice) => {
   const cubeData = getVertexData();
@@ -100,7 +101,7 @@ export const renderCube = (ctx: GPUCanvasContext, device: GPUDevice) => {
     colorAttachments: [
       {
         view: textureView,
-        clearValue: { r: 0.1, g: 0.1, b: 0.1, a: 1.0 },
+        clearValue: clearValue,
         loadOp: 'clear',
         storeOp: 'store',
       },

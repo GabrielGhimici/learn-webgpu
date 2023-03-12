@@ -1,5 +1,6 @@
 import primitiveVertexShader from '../shaders/primitive.vert.wgsl';
 import primitiveFragmentShader from '../shaders/primitive.frag.wgsl';
+import { clearValue } from '../utils/consts';
 
 export const renderPrimitives = (
   ctx: GPUCanvasContext,
@@ -33,7 +34,7 @@ export const renderPrimitives = (
     colorAttachments: [
       {
         view: textureView,
-        clearValue: { r: 0.1, g: 0.1, b: 0.1, a: 1.0 },
+        clearValue: clearValue,
         loadOp: 'clear',
         storeOp: 'store',
       },

@@ -1,6 +1,7 @@
 import { createBuffer, createIndexBuffer } from '../utils/buffers';
 import bufferSquareVertexShader from '../shaders/buffer-square.vert.wgsl';
 import bufferSquareFragmentShader from '../shaders/buffer-square.frag.wgsl';
+import { clearValue } from '../utils/consts';
 
 export enum RenderContext {
   TWO_BUFFERS = 'two-buffers',
@@ -130,7 +131,7 @@ export const renderSquareWithBuffer = (ctx: GPUCanvasContext, device: GPUDevice,
     colorAttachments: [
       {
         view: textureView,
-        clearValue: { r: 0.8, g: 0.8, b: 0.8, a: 1.0 },
+        clearValue: clearValue,
         loadOp: 'clear',
         storeOp: 'store',
       },
