@@ -96,7 +96,7 @@ export const renderCube = (ctx: GPUCanvasContext, device: GPUDevice) => {
     usage: GPUTextureUsage.RENDER_ATTACHMENT,
   });
 
-  const renderPassDescription = {
+  const renderPassDescription: GPURenderPassDescriptor = {
     colorAttachments: [
       {
         view: textureView,
@@ -107,7 +107,6 @@ export const renderCube = (ctx: GPUCanvasContext, device: GPUDevice) => {
     ],
     depthStencilAttachment: {
       view: depthTexture.createView(),
-      depthLoadValue: 1.0,
       depthClearValue: 1.0,
       depthLoadOp: 'clear',
       depthStoreOp: 'store',
@@ -121,7 +120,7 @@ export const renderCube = (ctx: GPUCanvasContext, device: GPUDevice) => {
   device.queue.writeBuffer(uniformBuffer, 0, modelViewProjectionMatrix as ArrayBuffer);
 
   const commandEncoder = device.createCommandEncoder();
-  const renderPass = commandEncoder.beginRenderPass(renderPassDescription as GPURenderPassDescriptor);
+  const renderPass = commandEncoder.beginRenderPass(renderPassDescription);
   renderPass.setPipeline(pipeline);
   renderPass.setVertexBuffer(0, vertexBuffer);
   renderPass.setVertexBuffer(1, colorBuffer);
