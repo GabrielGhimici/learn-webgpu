@@ -5,6 +5,7 @@ import { renderTriangle } from './core/triangle';
 import { renderPrimitives } from './core/primitives';
 import { renderTrianglePrimitives } from './core/triangle-primitives';
 import { RenderContext, renderSquareWithBuffer } from './core/buffer-square';
+import { renderCube } from './core/cube/cube';
 
 const appContainer = document.getElementById('app');
 
@@ -41,5 +42,6 @@ async function render(canvas: HTMLCanvasElement) {
   // renderTrianglePrimitives(ctx, device, 'triangle-strip');
   // renderSquareWithBuffer(ctx, device, RenderContext.TWO_BUFFERS);
   // renderSquareWithBuffer(ctx, device, RenderContext.ONE_BUFFER);
-  renderSquareWithBuffer(ctx, device, RenderContext.INDEXED);
+  // renderSquareWithBuffer(ctx, device, RenderContext.INDEXED);
+  renderCube(ctx, device);
 }
