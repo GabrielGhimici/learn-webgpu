@@ -3,7 +3,7 @@ import { getVertexData } from './vertex-data';
 import cubeVertexShader from '../../shaders/cube.vert.wgsl';
 import cubeFragmentShader from '../../shaders/cube.frag.wgsl';
 import { createTransforms, createViewProjection } from '../../utils/matrix';
-import { mat4 } from 'gl-matrix';
+import { mat4, vec3 } from 'gl-matrix';
 import { clearValue } from '../../utils/constants';
 
 export const renderCube = (ctx: GPUCanvasContext, device: GPUDevice) => {
@@ -89,7 +89,7 @@ export const renderCube = (ctx: GPUCanvasContext, device: GPUDevice) => {
     ],
   });
 
-  const textureView = ctx.getCurrentTexture().createView();
+  let textureView = ctx.getCurrentTexture().createView();
 
   const depthTexture = device.createTexture({
     size: [canvasWidth, canvasHeight, 1],
@@ -114,20 +114,38 @@ export const renderCube = (ctx: GPUCanvasContext, device: GPUDevice) => {
     },
   };
 
-  const modelMatrix = mat4.create();
-  createTransforms(modelMatrix);
-  const modelViewProjectionMatrix = mat4.create();
-  mat4.multiply(modelViewProjectionMatrix, viewProjectionMatrix, modelMatrix);
-  device.queue.writeBuffer(uniformBuffer, 0, modelViewProjectionMatrix as ArrayBuffer);
+  let rotation = vec3.fromValues(0, 0, 0);
 
-  const commandEncoder = device.createCommandEncoder();
-  const renderPass = commandEncoder.beginRenderPass(renderPassDescription);
-  renderPass.setPipeline(pipeline);
-  renderPass.setVertexBuffer(0, vertexBuffer);
-  renderPass.setVertexBuffer(1, colorBuffer);
-  renderPass.setBindGroup(0, uniformBindGroup);
-  renderPass.draw(numberOfVertices);
-  renderPass.end();
+  const draw = () => {
+    const modelMatrix = mat4.create();
+    createTransforms(modelMatrix, [0, 0, 0], rotation);
+    const modelViewProjectionMatrix = mat4.create();
+    mat4.multiply(modelViewProjectionMatrix, viewProjectionMatrix, modelMatrix);
+    device.queue.writeBuffer(uniformBuffer, 0, modelViewProjectionMatrix as ArrayBuffer);
+    textureView = ctx.getCurrentTexture().createView();
+    for (let attachment of renderPassDescription.colorAttachments) {
+      if (attachment) {
+        attachment.view = textureView;
+      }
+    }
+    const commandEncoder = device.createCommandEncoder();
+    const renderPass = commandEncoder.beginRenderPass(renderPassDescription);
+    renderPass.setPipeline(pipeline);
+    renderPass.setVertexBuffer(0, vertexBuffer);
+    renderPass.setVertexBuffer(1, colorBuffer);
+    renderPass.setBindGroup(0, uniformBindGroup);
+    renderPass.draw(numberOfVertices);
+    renderPass.end();
 
-  device.queue.submit([commandEncoder.finish()]);
+    device.queue.submit([commandEncoder.finish()]);
+  };
+  const animate = () => {
+    rotation[0] += 0.01;
+    rotation[1] += 0.008;
+    rotation[2] += 0.002;
+    draw();
+    requestAnimationFrame(animate);
+  };
+
+  animate();
 };
