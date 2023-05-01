@@ -1,6 +1,6 @@
 import primitiveVertexShader from '../shaders/primitive.vert.wgsl';
 import primitiveFragmentShader from '../shaders/primitive.frag.wgsl';
-import { clearValue } from '../utils/constants';
+import { clearValue } from '../../utils/constants';
 
 export const renderPrimitives = (
   ctx: GPUCanvasContext,
