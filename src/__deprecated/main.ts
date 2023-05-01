@@ -1,9 +1,5 @@
 import { Canvas } from './core/canvas';
 import { checkWebGPU } from './utils/check-webgpu';
-import { renderTriangle } from './core/triangle';
-import { renderPrimitives } from './core/primitives';
-import { renderTrianglePrimitives } from './core/triangle-primitives';
-import { RenderContext, renderSquareWithBuffer } from './core/buffer-square';
 import { renderCube } from './core/cube/cube';
 
 export async function deprecatedRendering() {
