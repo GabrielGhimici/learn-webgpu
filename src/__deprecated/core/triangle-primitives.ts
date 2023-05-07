@@ -1,6 +1,6 @@
 import trianglePrimitiveVertexShader from '../shaders/triangle-primitive.vert.wgsl';
 import trianglePrimitiveFragmentShader from '../shaders/triangle-primitive.frag.wgsl';
-import { clearValue } from '../utils/constants';
+import { clearValue } from '../../utils/constants';
 
 export const renderTrianglePrimitives = (
   ctx: GPUCanvasContext,

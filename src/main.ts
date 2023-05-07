@@ -1,47 +1,15 @@
 import '../index.css';
-import { Canvas } from './core/canvas';
-import { checkWebGPU } from './utils/check-webgpu';
-import { renderTriangle } from './core/triangle';
-import { renderPrimitives } from './core/primitives';
-import { renderTrianglePrimitives } from './core/triangle-primitives';
-import { RenderContext, renderSquareWithBuffer } from './core/buffer-square';
-import { renderCube } from './core/cube/cube';
+import { App } from './app';
+import { assertDefined } from './utils/assert';
+// import { deprecatedRendering } from './__deprecated/main';
 
-const appContainer = document.getElementById('app');
+// deprecatedRendering();
 
-if (appContainer) {
-  const canvas = new Canvas();
-  const htmlCanvas = canvas.element;
-  appContainer.appendChild(htmlCanvas);
-  checkWebGPU(htmlCanvas);
-  await render(htmlCanvas);
-} else {
-  console.error('There is no app container present.');
-}
+const appRoot = document.getElementById('app');
 
-async function render(canvas: HTMLCanvasElement) {
-  const adapter = await navigator.gpu.requestAdapter();
-  if (!adapter) {
-    throw new Error('Unable to retrieve adapter');
-  }
-  const device = await adapter.requestDevice();
-  const ctx = canvas.getContext('webgpu');
-  if (!ctx) {
-    throw new Error('Unable to retrieve canvas context!');
-  }
-  ctx.configure({
-    device: device,
-    format: navigator.gpu.getPreferredCanvasFormat(),
-    alphaMode: 'opaque',
-  });
-  // renderTriangle(ctx, device);
-  // renderPrimitives(ctx, device);
-  // renderPrimitives(ctx, device, 'line-list');
-  // renderPrimitives(ctx, device, 'line-strip');
-  // renderTrianglePrimitives(ctx, device);
-  // renderTrianglePrimitives(ctx, device, 'triangle-strip');
-  // renderSquareWithBuffer(ctx, device, RenderContext.TWO_BUFFERS);
-  // renderSquareWithBuffer(ctx, device, RenderContext.ONE_BUFFER);
-  // renderSquareWithBuffer(ctx, device, RenderContext.INDEXED);
-  renderCube(ctx, device);
-}
+assertDefined(appRoot, 'Root container - #app, is missing!');
+
+const app = new App(appRoot as HTMLDivElement);
+app.init().then(() => {
+  app.run();
+});

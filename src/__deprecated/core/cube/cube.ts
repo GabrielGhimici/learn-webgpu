@@ -4,7 +4,7 @@ import cubeVertexShader from '../../shaders/cube.vert.wgsl';
 import cubeFragmentShader from '../../shaders/cube.frag.wgsl';
 import { createTransforms, createViewProjection } from '../../utils/matrix';
 import { mat4, vec3 } from 'gl-matrix';
-import { clearValue } from '../../utils/constants';
+import { clearValue } from '../../../utils/constants';
 
 export const renderCube = (ctx: GPUCanvasContext, device: GPUDevice) => {
   const cubeData = getVertexData();
