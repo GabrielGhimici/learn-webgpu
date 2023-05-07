@@ -10,5 +10,6 @@ const appRoot = document.getElementById('app');
 assertDefined(appRoot, 'Root container - #app, is missing!');
 
 const app = new App(appRoot as HTMLDivElement);
-await app.init();
-app.run();
+app.init().then(() => {
+  app.run();
+});

@@ -2,22 +2,22 @@ import { Renderer } from './renderer';
 import { Scene } from './scene';
 
 export class App {
-  private renderer: Renderer;
-  private scene: Scene;
-  private canvas: HTMLCanvasElement;
-  private pixelRatio: number = 1;
+  private _renderer: Renderer;
+  private _scene: Scene;
+  private _canvas: HTMLCanvasElement;
+  private _pixelRatio: number = 1;
 
   constructor(private root: HTMLDivElement) {
-    this.renderer = new Renderer();
-    this.scene = new Scene();
-    this.canvas = document.createElement('canvas');
+    this._renderer = new Renderer();
+    this._scene = new Scene();
+    this._canvas = document.createElement('canvas');
   }
 
   public async init() {
     if (!this.isWebGPUEnabled()) return;
     this.createHTMLContext();
-    await this.renderer.init(this.canvas);
-    this.scene.init();
+    await this._renderer.init(this._canvas);
+    this._scene.init();
   }
 
   private isWebGPUEnabled() {
@@ -31,20 +31,20 @@ export class App {
   }
 
   private createHTMLContext() {
-    this.canvas.width = window.innerWidth * this.pixelRatio;
-    this.canvas.height = window.innerHeight * this.pixelRatio;
+    this._canvas.width = window.innerWidth * this._pixelRatio;
+    this._canvas.height = window.innerHeight * this._pixelRatio;
     window.addEventListener('resize', () => {
-      this.canvas.width = window.innerWidth * this.pixelRatio;
-      this.canvas.height = window.innerHeight * this.pixelRatio;
+      this._canvas.width = window.innerWidth * this._pixelRatio;
+      this._canvas.height = window.innerHeight * this._pixelRatio;
     });
-    this.root.appendChild(this.canvas);
+    this.root.appendChild(this._canvas);
   }
 
   public run() {
-    const runLoop = (ts: DOMHighResTimeStamp) => {
-      this.renderer.render();
+    const runLoop = () => {
+      this._renderer.render(this._scene.getRenderState());
       requestAnimationFrame(runLoop);
     };
-    runLoop(0);
+    runLoop();
   }
 }
