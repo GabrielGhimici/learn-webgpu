@@ -1,4 +1,3 @@
-import { Shader } from './shader';
 import { assertDefined } from './utils/assert';
 import { clearValue } from './utils/constants';
 import { RenderState } from './types/render-state';
