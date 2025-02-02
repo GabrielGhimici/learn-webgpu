@@ -121,7 +121,7 @@ export const renderCube = (ctx: GPUCanvasContext, device: GPUDevice) => {
     createTransforms(modelMatrix, [0, 0, 0], rotation);
     const modelViewProjectionMatrix = mat4.create();
     mat4.multiply(modelViewProjectionMatrix, viewProjectionMatrix, modelMatrix);
-    device.queue.writeBuffer(uniformBuffer, 0, modelViewProjectionMatrix as ArrayBuffer);
+    device.queue.writeBuffer(uniformBuffer, 0, modelViewProjectionMatrix as any);
     textureView = ctx.getCurrentTexture().createView();
     for (let attachment of renderPassDescription.colorAttachments) {
       if (attachment) {
